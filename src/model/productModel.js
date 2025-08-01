@@ -143,7 +143,6 @@ exports.getProductsBySubcategoryId = (subcategoryId) => {
             if (err) return reject(err);
             else 
             {
-                console.log("Products by subcategory:", results);
                 resolve(results);
             }
                 
@@ -157,6 +156,22 @@ exports.getProductById = (id) => {
     db.query(sql, [id], (err, result) => {
       if (err) reject(err);
       else resolve(result[0]);
+    });
+  });
+};
+exports.deleteSubCatByID = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql = 'DELETE FROM subcategory WHERE subcategory_id = ?';
+    db.query(sql, [id], (err, result) => {
+      if (err)
+      {
+         console.log(err);
+         reject(err);
+      }
+      else{
+         
+         resolve(result[0]);
+      }
     });
   });
 };

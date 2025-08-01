@@ -216,3 +216,37 @@ exports.showProductDetails = async (req, res) => {
         res.status(500).send("Error fetching product details.");
     }
 };
+
+
+
+exports.getProBySubCat = async (req, res) => {
+    const subCatId = req.params.sid;
+    try {
+        const products = await productmodel.getProductsBySubcategoryId(subCatId);
+        if (products) {
+            res.render('SubcategoryProducts.ejs', { products });
+        } else {
+            res.status(404).send("Product not found.");
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error fetching product details.");
+    }
+};
+exports.deleteSubCatByID =  (req, res) => {
+    let subCatId =req.params.sid;
+
+    let promise= productmodel.deleteSubCatByID(subCatId);
+    promise.then((result)=>{
+        let p= productmodel.getSubCategoriesByCategoryId();
+        p.then((r)=>{
+            res.render("ViewSubCategory.ejs", { subcategories : r});
+        })
+        p.catch((err) => {
+             res.status(404).send("Sub category not found.");
+        });
+    }).catch((err) => {
+        res.status(500).send("Error fetching sub category details.");
+    });
+    
+}
