@@ -30,6 +30,12 @@ router.get("/viewCategoryDetails/:Cid", productCtrl.viewCategoryDetails);
 router.get("/add-subcategory/:Cid", productCtrl.addSubCategoryPage);
 router.post("/subcategorysave",upload.single("image"), productCtrl.saveSubCategory);
 router.get("/view-subcategories/:Cid", productCtrl.viewSubCategory);
+<<<<<<< HEAD
+=======
+router.get("/viewProBySubCat/:sid",productCtrl.getProBySubCat);
+router.get("/deleteSubCat/:sid",productCtrl.deleteSubCatByID);
+
+>>>>>>> 040a3c664c0da631258fc7b055aad9abece527e5
 
 
 router.get("/add-product", productCtrl.addProductPage);
