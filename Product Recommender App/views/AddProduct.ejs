@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Product</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      background: #f1f5f9;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .form-container {
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2c3e50;
+    }
+
+    label {
+      font-weight: bold;
+      color: #34495e;
+    }
+
+    .form-control {
+      border-radius: 8px;
+      border: 1px solid #ced4da;
+    }
+
+    .form-control:focus {
+      box-shadow: 0 0 5px rgba(0,123,255,0.4);
+      border-color: #007bff;
+    }
+
+    .btn-success {
+      background-color: #28a745;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn-success:hover {
+      background-color: #218838;
+    }
+
+    .alert {
+      border-radius: 8px;
+      font-weight: 500;
+    }
+
+    option {
+      color: #2d3436;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="form-container">
+      <h2>Add Product</h2>
+
+      <!-- ✅ Message -->
+      <% if (msg) { %>
+        <div class="alert alert-<%= msg.type %> alert-dismissible fade show" role="alert">
+          <%= msg %>
+          <button type="button" class="close" data-dismiss="alert">
+            <span>&times;</span>
+          </button>
+        </div>
+      <% } %>
+
+      <!-- ✅ Form Start -->
+      <form action="/productsave" method="POST" enctype="multipart/form-data">
+
+        <!-- Name -->
+        <div class="form-group">
+          <label>Product Name</label>
+          <input type="text" name="name" class="form-control" required placeholder="Enter product name">
+        </div>
+
+        <!-- Image -->
+        <div class="form-group">
+          <label>Product Image</label>
+          <input type="file" name="image" class="form-control" accept="image/*" required>
+        </div>
+
+        <!-- Subcategory Dropdown -->
+        <div class="form-group">
+          <label>Select Subcategory</label>
+          <select name="subcategoryId" class="form-control" required>
+            <option value="">-- Choose Subcategory --</option>
+            <% subcategories.forEach(function(subcat) { %>
+              <option value="<%= subcat.subcategory_id %>"><%= subcat.subcategory_name %></option>
+            <% }); %>
+          </select>
+        </div>
+
+        <!-- Brand -->
+        <div class="form-group">
+          <label>Brand</label>
+          <input type="text" name="brand" class="form-control" required placeholder="Enter brand name">
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+          <label>Description</label>
+          <textarea name="description" class="form-control" rows="3" required placeholder="Enter product description"></textarea>
+        </div>
+
+        <!-- Stock Unit -->
+        <div class="form-group">
+          <label>Stock Unit</label>
+          <select name="stockUnit" class="form-control" required>
+            <option value="">-- Choose Unit --</option>
+            <option value="kilogram">Kilogram</option>
+            <option value="piece">Piece</option>
+            <option value="liter">Liter</option>
+          </select>
+        </div>
+
+        <!-- Stock Quantity -->
+        <div class="form-group">
+          <label>Stock Quantity</label>
+          <input type="number" name="stock" class="form-control" min="0" step="1" required placeholder="Enter available stock">
+        </div>
+
+        <!-- Price -->
+        <div class="form-group">
+          <label>Price (per unit)</label>
+          <input type="number" name="price" class="form-control" step="0.01" min="0" required placeholder="Enter price">
+        </div>
+
+        <!-- Discount -->
+        <div class="form-group">
+          <label>Discount (per unit)</label>
+          <input type="number" name="discount" class="form-control" step="0.01" min="0" required placeholder="Enter discount">
+        </div>
+
+        <!-- Organic -->
+        <div class="form-group">
+          <label>Is Organic?</label>
+          <select name="organic" class="form-control" required>
+            <option value="">-- Select --</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </div>
+
+
+        <button type="submit" class="btn btn-success btn-block">Save Product</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

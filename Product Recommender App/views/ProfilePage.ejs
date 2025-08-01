@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="card p-4 shadow-sm">
+            <h2 class="mb-3">Welcome, <%= user.name %>!</h2>
+            <p><strong>Email:</strong> <%= user.email %></p>
+            <p><strong>Phone:</strong> <%= user.phone %></p>
+            <p><strong>Type:</strong> <%= user.type %></p>
+            
+            <% if (user.photo) { %>
+                <img src="/upload/<%= user.photo %>" alt="User Photo" width="150" class="rounded-circle mt-3">
+            <% } %>
+
+            
+            <a href="/logout" class="btn btn-danger mt-4">Logout</a>
+
+            
+            <% if (user.type === 'user') { %>
+                <a href="/userProfile" class="btn btn-primary mt-2 ml-2">Go to Home</a>
+            <% } else if (user.type === 'admin') { %>
+                <a href="/adminDashboard" class="btn btn-primary mt-2 ml-2">Go to Home</a>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>
