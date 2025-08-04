@@ -165,7 +165,6 @@ exports.deleteSubCatByID = (id) => {
     db.query(sql, [id], (err, result) => {
       if (err)
       {
-         console.log(err);
          reject(err);
       }
       else{

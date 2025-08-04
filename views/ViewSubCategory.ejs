@@ -17,6 +17,12 @@
   <div class="container mt-5">
     <h2 class="text-center mb-4">All Subcategories</h2>
 
+    <% if (typeof msg !== "undefined" && msg) { %>
+      <div class="alert alert-success text-center">
+        <%= msg %>
+      </div>
+    <% } %>
+
     <table class="table table-bordered table-hover text-center">
       <thead class="thead-dark">
         <tr>

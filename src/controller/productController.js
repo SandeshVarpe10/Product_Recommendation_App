@@ -240,7 +240,7 @@ exports.deleteSubCatByID =  (req, res) => {
     promise.then((result)=>{
         let p= productmodel.getSubCategoriesByCategoryId();
         p.then((r)=>{
-            res.render("ViewSubCategory.ejs", { subcategories : r});
+            res.render("ViewSubCategory.ejs", { subcategories : r , msg : "Deleted Succesfully !"});
         })
         p.catch((err) => {
              res.status(404).send("Sub category not found.");
