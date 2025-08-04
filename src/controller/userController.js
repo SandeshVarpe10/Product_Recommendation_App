@@ -15,14 +15,17 @@ exports.homePage = async (req, res) => {
             }
         }
         const categories = await categoryModel.getAllCategories(); 
+        const subcat=await categoryModel.getAllSubCategories();
         res.render("Home.ejs", {
             user: user,
-            categories: categories
+            categories: categories,
+            subcategories: subcat
         });
     } catch (err) {
         res.render("Home.ejs", {
             user: null,
             categories: [],
+            subcategories: [],
             msg: "Something went wrong while loading home page."
         });
     }

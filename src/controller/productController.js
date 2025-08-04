@@ -40,6 +40,19 @@ exports.searchProductByCategory = async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 }
+
+exports.liveSearch = (req, res) => {
+  const searchTerm = req.query.query;
+  productmodel.searchProducts(searchTerm)
+    .then((products) => {
+      res.json(products);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: "Server error" });
+    });
+};
+
 exports.deleteCategory =  (req, res) => {
     let categoryId =req.params.Did;
 

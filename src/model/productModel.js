@@ -49,6 +49,19 @@ exports.searchProductByCategory = (categoryName) => {
         });
     });
 }
+exports.searchProducts = (searchTerm) => {
+  const sql = 'SELECT * FROM products WHERE product_name LIKE ?';
+  return new Promise((resolve,reject)=>{
+     db.query(sql, [`%${searchTerm}%`],(err,result)=>{
+        if(err){
+            reject(err);
+        }else{
+            resolve(result);
+        }
+   })
+  })
+};
+
 
 exports.deleteCategory = (categoryId) => {
     return new Promise((resolve, reject) => {

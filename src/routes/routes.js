@@ -41,5 +41,6 @@ router.post("/productsave", upload.single("image"), productCtrl.saveProduct);
 router.get("/view-products", productCtrl.viewProducts);
 router.get('/products/:subcategoryId', productCtrl.viewProductsBySubcategory);
 router.get('/product/:product_id', productCtrl.showProductDetails);
+router.get('/search-live', productCtrl.liveSearch);
 
 module.exports = router;
