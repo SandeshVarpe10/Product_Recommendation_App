@@ -143,10 +143,6 @@ exports.getProductsBySubcategoryId = (subcategoryId) => {
             if (err) return reject(err);
             else 
             {
-<<<<<<< HEAD
-                console.log("Products by subcategory:", results);
-=======
->>>>>>> 040a3c664c0da631258fc7b055aad9abece527e5
                 resolve(results);
             }
                 
@@ -162,8 +158,6 @@ exports.getProductById = (id) => {
       else resolve(result[0]);
     });
   });
-<<<<<<< HEAD
-=======
 };
 exports.deleteSubCatByID = (id) => {
   return new Promise((resolve, reject) => {
@@ -171,14 +165,26 @@ exports.deleteSubCatByID = (id) => {
     db.query(sql, [id], (err, result) => {
       if (err)
       {
-         console.log(err);
          reject(err);
       }
       else{
-         
          resolve(result[0]);
       }
     });
   });
->>>>>>> 040a3c664c0da631258fc7b055aad9abece527e5
 };
+
+exports.getSubCategoryById = (id) => {
+    return new Promise((resolve, reject) => {
+        const sql = 'SELECT * FROM subcategory WHERE subcategory_id = ?';
+        db.query(sql, [id], (err, result) => {
+        if (err) {
+            console.error("Error fetching subcategory:", err);
+            reject(err);
+        } else {
+            console.log("Subcategory found:", result[0]);
+            resolve(result[0]);
+        }
+        });
+    });
+}

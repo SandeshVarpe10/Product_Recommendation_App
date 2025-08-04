@@ -122,9 +122,9 @@ exports.viewSubCategory = async (req, res) => {
     let categoryId = req.params.Cid;
     try {
         let subcategories = await productmodel.getSubCategoriesByCategoryId(categoryId);
-        res.render("ViewSubCategory.ejs", { subcategories });
+        res.render("ViewSubCategory.ejs", { subcategories, categoryId,msg: null });
     } catch (err) {
-        res.render("ViewSubCategory.ejs", { subcategories: null });
+        res.render("ViewSubCategory.ejs", { subcategories: null, categoryId,msg: "Error fetching subcategories!" });
     }
 }
 
@@ -215,9 +215,6 @@ exports.showProductDetails = async (req, res) => {
         console.error(err);
         res.status(500).send("Error fetching product details.");
     }
-<<<<<<< HEAD
-};
-=======
 };
 
 
@@ -237,13 +234,13 @@ exports.getProBySubCat = async (req, res) => {
     }
 };
 exports.deleteSubCatByID =  (req, res) => {
-    let subCatId =req.params.sid;
-
+    let subCatId =req.params.Sid;
+    let categoryId = req.params.Cid;
     let promise= productmodel.deleteSubCatByID(subCatId);
     promise.then((result)=>{
-        let p= productmodel.getSubCategoriesByCategoryId();
+        let p= productmodel.getSubCategoriesByCategoryId(categoryId);
         p.then((r)=>{
-            res.render("ViewSubCategory.ejs", { subcategories : r});
+            res.render("ViewSubCategory.ejs", { subcategories : r, categoryId, msg: "Sub category deleted successfully!" });
         })
         p.catch((err) => {
              res.status(404).send("Sub category not found.");
@@ -253,4 +250,13 @@ exports.deleteSubCatByID =  (req, res) => {
     });
     
 }
->>>>>>> 040a3c664c0da631258fc7b055aad9abece527e5
+
+exports.updateSubCategoryPage = async (req, res) => {
+    console.log("Updating subcategory with ID:", req.params.Sid);
+    let promise= productmodel.getSubCategoryById(req.params.Sid);
+    promise.then((result)=>{
+        res.render("UpdateSubCategory.ejs", { subcategory: result,msg: null });
+    }).catch((err) => {
+        res.status(404).send("Sub category not found.");
+    });
+}

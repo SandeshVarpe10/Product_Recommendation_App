@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Subcategory</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f6f9fc, #d9e8ff);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .form-container {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    .form-title {
+      font-weight: bold;
+      color: #34495e;
+    }
+    .form-label {
+      font-weight: 500;
+      color: #2c3e50;
+    }
+    .btn-primary {
+      background-color: #3498db;
+      border: none;
+    }
+    .btn-secondary {
+      background-color: #95a5a6;
+      border: none;
+    }
+    .img-preview {
+      max-width: 200px;
+      max-height: 150px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="form-container mx-auto" style="max-width: 600px;">
+      <h2 class="text-center form-title mb-4">Update Subcategory</h2>
+
+      <% if (msg) { %>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+          <%= msg %>
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+      <% } %>
+
+      <form action="/subcategory/update/<%= subcategory.subcategory_id %>" method="POST" enctype="multipart/form-data">
+        <!-- Subcategory Name -->
+        <div class="form-group">
+          <label for="subcategory_name" class="form-label">Subcategory Name</label>
+          <input type="text" class="form-control" id="subcategory_name" name="subcategory_name" value="<%= subcategory.subcategory_name %>" required>
+        </div>
+
+        <!-- Current Image -->
+        <% if (subcategory.image) { %>
+          <div class="form-group">
+            <label class="form-label">Current Image:</label><br>
+            <img src="<%= subcategory.image %>" alt="Subcategory Image" class="img-preview">
+          </div>
+        <% } %>
+
+        <!-- New Image Upload -->
+        <div class="form-group">
+          <label for="subcategory_image" class="form-label">Upload New Image (optional)</label>
+          <input type="file" class="form-control-file" id="subcategory_image" name="subcategory_image" accept="image/*">
+        </div>
+
+        <!-- Buttons -->
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="/viewSubcategories/" class="btn btn-secondary ml-2">Back</a>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
