@@ -17,12 +17,9 @@
   <div class="container mt-5">
     <h2 class="text-center mb-4">All Subcategories</h2>
 
-    <% if (msg) { %>
-      <div class="alert alert-info alert-dismissible fade show" role="alert">
+    <% if (typeof msg !== "undefined" && msg) { %>
+      <div class="alert alert-success text-center">
         <%= msg %>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
     <% } %>
 
