@@ -33,6 +33,8 @@ router.get("/view-subcategories/:Cid", productCtrl.viewSubCategory);
 router.get("/viewProBySubCat/:Sid",productCtrl.getProBySubCat);
 router.get("/deleteSubCat/:Cid/:Sid",productCtrl.deleteSubCatByID);
 router.get("/updatesubcategory/:Sid", productCtrl.updateSubCategoryPage);
+router.post("/subcategoryupdatesave/:Sid", upload.single("image"), productCtrl.updateSubCategorySave);
+router.get("/subcategorydetails/:Cid/:Sid", productCtrl.viewSubCategoryDetails);
 
 
 

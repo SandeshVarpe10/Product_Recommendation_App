@@ -105,9 +105,9 @@ exports.addSubCategoryPage = (name,categoryid,image) => {
         db.query("INSERT INTO subcategory VALUES ('0',?, ?, ?)", [name,categoryid,image], (err, result) => {
             if (err) {
 
-                reject("Error adding subcategory");
+                reject(err);
             } else {
-                resolve("Subcategory added successfully");
+                resolve(result);
             }
         });
     });
@@ -195,9 +195,20 @@ exports.getSubCategoryById = (id) => {
             console.error("Error fetching subcategory:", err);
             reject(err);
         } else {
-            console.log("Subcategory found:", result[0]);
-            resolve(result[0]);
+            resolve(result);
         }
+        });
+    });
+}
+
+exports.updatesavesubcategory = (subcategoryId, subcategory_name, image) => {
+    return new Promise((resolve, reject) => {
+        db.query("UPDATE subcategory SET subcategory_name = ?, image = ? WHERE subcategory_id = ?", [subcategory_name, image, subcategoryId], (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
         });
     });
 }
