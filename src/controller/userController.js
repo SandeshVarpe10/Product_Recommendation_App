@@ -40,7 +40,7 @@ exports.RegisterPage = (req, res) => {
 };
 
 exports.SaveUserData = async (req, res) => {
-    res.setHeader("Cache-Control", "no-store");
+    
     try {
         const { name, email, password, age } = req.body; 
         const photo = req.file?.filename || "default.jpg";

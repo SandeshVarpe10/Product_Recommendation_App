@@ -166,6 +166,98 @@
     #searchResults, #searchRes {
       display: none;
     }
+    .subcategory-card {
+  width: 240px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+  margin: 20px;
+  padding: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+}
+
+.subcategory-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.subcategory-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.subcategory-card h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.price-box {
+  margin-top: 10px;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.discounted-price {
+  color: #e53935;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.save-text {
+  font-size: 0.85rem;
+  color: #43a047;
+  margin-bottom: 6px;
+}
+
+.unit-label {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 4px;
+  background: #f0f0f0;
+  padding: 4px 10px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.add-to-cart-btn {
+  margin-top: 12px;
+  padding: 10px 20px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  font-weight: 500;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.add-to-cart-btn:hover {
+  background: #0056b3;
+}
+
+.add-to-cart-btn i {
+  font-size: 1.1rem;
+}
+
   </style>
 </head>
 <body>
@@ -291,11 +383,28 @@
         data.forEach(product => {
           container.innerHTML += `
             <a href="/product/${product.id}">
-              <div class="subcategory-card">
-                <img src="/images/${product.product_image}" alt="${product.product_name}">
-                <h4>${product.product_name}</h4>
-              </div>
-            </a>
+  <div class="subcategory-card">
+    <img src="/images/${product.product_image}" alt="${product.product_name}">
+    <h4>${product.product_name}</h4>
+
+    <div class="price-box">
+      <p class="original-price">₹${product.price}</p>
+      <p class="discounted-price">
+        ₹${(product.price - (product.price * product.discount / 100)).toFixed(2)}
+      </p>
+      <p class="save-text">
+        Save ₹${(product.price * product.discount / 100).toFixed(2)} (${product.discount}% Off)
+      </p>
+    </div>
+
+    <p class="unit-label">1 ${product.stock_unit}</p>
+
+    <button class="add-to-cart-btn">
+      <i class="bi bi-cart-plus-fill"></i> Add to Cart
+    </button>
+  </div>
+</a>
+
           `;
         });
       }

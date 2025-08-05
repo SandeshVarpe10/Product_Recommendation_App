@@ -138,6 +138,7 @@ exports.getAllSubCategories = () => {
     });
 }
 
+
 exports.saveProduct = (name, image, subcategoryId, brand, description, stockUnit, stock, price, discount, organic, created_at, updated_at) => {
     return new Promise((resolve, reject) => {
         db.query("INSERT INTO products VALUES ('0',?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [name, image, subcategoryId, brand, description, stockUnit, stock, price, discount, organic, created_at, updated_at], (err, result) => {
@@ -171,7 +172,49 @@ exports.getProductById = (id) => {
       else resolve(result[0]);
     });
   });
+}
+
+exports.updateProductSave = (
+  productId,
+  name,
+  image,
+  subcategoryId,
+  brand,
+  description,
+  stockUnit,
+  stock,
+  price,
+  discount,
+  organic
+) => {
+  return new Promise((resolve, reject) => {
+    const sql = `
+      UPDATE products 
+      SET product_name = ?, product_image = ?, subcategory_id = ?, brand = ?, 
+          description = ?, stock_unit = ?, stock = ?, price = ?, discount = ?, organic = ?
+      WHERE product_id = ?`;
+
+    const values = [name, image, subcategoryId, brand, description, stockUnit, stock, price, discount, organic, productId];
+
+    db.query(sql, values, (err, result) => {
+      if (err) reject(err);
+      else resolve(result);
+    });
+  });
 };
+
+exports.deleteProduct = (productId) => {
+    return new Promise((resolve, reject) => {
+        const sql = 'DELETE FROM products WHERE product_id = ?';
+        db.query(sql, [productId], (err, result) => {
+        if (err) {
+            reject(err);
+        } else {
+            resolve(result);
+        }
+        });
+    });
+}
 exports.deleteSubCatByID = (id) => {
   return new Promise((resolve, reject) => {
     const sql = 'DELETE FROM subcategory WHERE subcategory_id = ?';

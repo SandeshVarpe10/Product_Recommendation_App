@@ -5,7 +5,7 @@ let productCtrl = require("../controller/productController");
 let upload = require("../middlware/PhotoUpload.js");
 const { getUserFromToken } = require("../middlware/checkHomeToken.js");
 
-router.get("/", getUserFromToken, userCtrl.homePage);
+router.get("/", userCtrl.homePage);
 router.get("/login", userCtrl.LoginPage);
 router.get("/register", userCtrl.RegisterPage);
 router.post("/registerdata", upload.single("photo"), userCtrl.SaveUserData);
@@ -32,8 +32,8 @@ router.post("/subcategorysave",upload.single("image"), productCtrl.saveSubCatego
 router.get("/view-subcategories/:Cid", productCtrl.viewSubCategory);
 router.get("/viewProBySubCat/:Sid",productCtrl.getProBySubCat);
 router.get("/deleteSubCat/:Cid/:Sid",productCtrl.deleteSubCatByID);
-router.get("/updatesubcategory/:Sid", productCtrl.updateSubCategoryPage);
-router.post("/subcategoryupdatesave/:Sid", upload.single("image"), productCtrl.updateSubCategorySave);
+router.get("/updatesubcategory/:Cid/:Sid", productCtrl.updateSubCategoryPage);
+router.post("/subcategoryupdatesave/:Cid/:Sid", upload.single("image"), productCtrl.updateSubCategorySave);
 router.get("/subcategorydetails/:Cid/:Sid", productCtrl.viewSubCategoryDetails);
 
 
@@ -44,5 +44,8 @@ router.get("/view-products", productCtrl.viewProducts);
 router.get('/products/:subcategoryId', productCtrl.viewProductsBySubcategory);
 router.get('/product/:product_id', productCtrl.showProductDetails);
 router.get('/search-live', productCtrl.liveSearch);
+router.get("/updateProduct/:product_id", productCtrl.updateProductPage);
+router.post("/productupdatesave/:product_id", upload.single("image"), productCtrl.updateProductSave);
+router.get("/deleteProduct/:product_id", productCtrl.deleteProduct);
 
 module.exports = router;

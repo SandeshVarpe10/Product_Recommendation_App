@@ -65,7 +65,7 @@
       </div>
     <% } %>
 
-    <form action="/subcategoryupdatesave/<%= subcategory.subcategory_id %>" method="POST" enctype="multipart/form-data">
+    <form action="/subcategoryupdatesave/<%= category_Id %>/<%= subcategory.subcategory_id %>" method="POST" enctype="multipart/form-data">
       <div class="form-group">
         <label for="subcategory_name">Subcategory Name</label>
         <input type="text" name="subcategory_name" id="subcategory_name" class="form-control" 

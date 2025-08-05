@@ -114,7 +114,7 @@
               </div>
               <div class="card-footer bg-white border-top-0">
                 <div class="btn-group">
-                  <form action="/updatesubcategory/<%= sub.subcategory_id %>" method="GET">
+                  <form action="/updatesubcategory/<%= categoryId %>/<%= sub.subcategory_id %>" method="GET">
                     <button class="btn btn-warning btn-sm">Update</button>
                   </form>
 
@@ -143,7 +143,7 @@
 
     <!-- Back Button at Bottom -->
     <div class="text-center mt-5 mb-3">
-      <a href="/viewcategories" class="btn btn-lg back-btn">← Back to Categories</a>
+      <a href="/view-category" class="btn btn-lg back-btn">← Back to Categories</a>
     </div>
 
   </div>
