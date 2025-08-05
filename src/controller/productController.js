@@ -42,8 +42,10 @@ exports.searchProductByCategory = async (req, res) => {
 }
 
 exports.liveSearch = (req, res) => {
-  const searchTerm = req.query.query;
-  productmodel.searchProducts(searchTerm)
+  const searchTerm = req.query.query || '';
+  const categoryId = req.query.category || '';
+
+  productmodel.searchProducts(searchTerm, categoryId)
     .then((products) => {
       res.json(products);
     })
@@ -52,6 +54,7 @@ exports.liveSearch = (req, res) => {
       res.status(500).json({ error: "Server error" });
     });
 };
+
 
 exports.deleteCategory =  (req, res) => {
     let categoryId =req.params.Did;

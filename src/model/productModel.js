@@ -49,17 +49,31 @@ exports.searchProductByCategory = (categoryName) => {
         });
     });
 }
-exports.searchProducts = (searchTerm) => {
-  const sql = 'SELECT * FROM products WHERE product_name LIKE ?';
-  return new Promise((resolve,reject)=>{
-     db.query(sql, [`%${searchTerm}%`],(err,result)=>{
-        if(err){
-            reject(err);
-        }else{
-            resolve(result);
-        }
-   })
-  })
+
+exports.searchProducts = (searchTerm, categoryId) => {
+  let sql = `
+    SELECT p.*
+    FROM products p
+    JOIN subcategory s ON p.subcategory_id = s.subcategory_id
+    JOIN categories c ON s.category_id = c.id
+    WHERE p.product_name LIKE ?
+  `;
+  const params = [`%${searchTerm}%`];
+
+  if (categoryId) {
+    sql += ' AND c.id = ?';
+    params.push(categoryId);
+  }
+
+  return new Promise((resolve, reject) => {
+    db.query(sql, params, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
 };
 
 

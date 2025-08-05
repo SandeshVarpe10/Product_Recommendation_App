@@ -166,6 +166,50 @@
     #searchResults, #searchRes {
       display: none;
     }
+    .searchCard{
+      height: 350px;
+      width: 250px;
+    }
+     .price-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 3px;
+    }
+
+    .original-price {
+      font-size: 14px;
+      color: #999;
+      text-decoration: line-through;
+    }
+
+    .discounted-price {
+      font-size: 20px;
+      font-weight: bold;
+      color: #2ecc71;
+    }
+
+    .you-save {
+      font-size: 14px;
+      color: #e67e22;
+      margin-bottom: 8px;
+    }
+
+    .unit {
+      font-size: 14px;
+      font-weight: bold;
+      color: #3498db;
+    }
+    .discount-badge {
+      top: 10px;
+      left: 10px;
+      background: #e74c3c;
+      color: white;
+      padding: 5px 10px;
+      font-size: 13px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -245,7 +289,7 @@
 
  <h2>All Categories & Subcategories</h2>
 
-<h3 id="searchRes">Search Results</h3>
+<h3 id="searchRes" class="searchResult">Search Results</h3>
 <div id="searchResults" class="subcategory-container">
 </div>
 
@@ -280,34 +324,54 @@
     return;
   }
 
-  fetch(`/search-live?query=${encodeURIComponent(query)}`)
-    .then(res => res.json())
-    .then(data => {
-      container.innerHTML = '';
+const category = document.querySelector('.category-select').value;
+fetch(`/search-live?query=${encodeURIComponent(query)}&category=${encodeURIComponent(category)}`)
+  .then(res => res.json())
+  .then(data => {
+    container.innerHTML = '';
 
-      if (data.length === 0) {
-        container.innerHTML = '<div class="text-muted">No products found.</div>';
-      } else {
-        data.forEach(product => {
-          container.innerHTML += `
-            <a href="/product/${product.id}">
-              <div class="subcategory-card">
-                <img src="/images/${product.product_image}" alt="${product.product_name}">
-                <h4>${product.product_name}</h4>
+    if (data.length === 0) {
+      container.innerHTML = '<div class="text-muted">No products found.</div>';
+    } else {
+      data.forEach(product => {
+        const originalPrice = parseFloat(product.price);
+        const discountPercent = parseFloat(product.discount);
+        const saved = (originalPrice * discountPercent) / 100;
+        const discountedPrice = originalPrice - saved;
+        let unitLabel = product.stock_unit === 'kilogram' ? '1 kg' :
+                        product.stock_unit === 'piece' ? '1 pic' :
+                        product.stock_unit === 'liter' ? '1 ltr' : '1 unit';; 
+
+        container.innerHTML += `
+          <a href="/product/${product.product_id}">
+            <div class="subcategory-card searchCard">
+            <div class="discount-badge">${ discountPercent }% OFF</div>
+              <img src="/images/${product.product_image}" alt="${product.product_name}">
+              <h4>${product.product_name}</h4>
+              <div class="product-info">
+                <div class="price-box">
+                  <div class="original-price">₹${originalPrice.toFixed(2)}</div>
+                  <div class="discounted-price">₹${discountedPrice.toFixed(2)}</div>
+                </div>
+                <div class="you-save">You save ₹${saved.toFixed(2)}</div>
+                <div class="unit">For ${unitLabel}</div>
               </div>
-            </a>
-          `;
-        });
-      }
+            </div>
+          </a>
+        `;
+      });
+    }
 
-      container.style.display = 'flex'; 
-      searchRes.style.display = 'flex'; 
-    })
-    .catch(err => {
-      console.error('Search error:', err);
-      container.style.display = 'none'; 
-      searchRes.style.display = 'none'; 
-    });
+    container.style.display = 'flex';
+    container.style.height = '400px';
+    searchRes.style.display = 'flex'; 
+  })
+  .catch(err => {
+    console.error('Search error:', err);
+    container.style.display = 'none'; 
+    searchRes.style.display = 'none'; 
+  });
+
 });
 
 </script>
