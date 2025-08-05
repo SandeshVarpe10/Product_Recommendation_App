@@ -244,14 +244,12 @@ exports.showProductDetails = async (req, res) => {
     }
 };
 
-
-
 exports.getProBySubCat = async (req, res) => {
-    const subCatId = req.params.sid;
+    const subCatId = req.params.Sid;
     try {
         const products = await productmodel.getProductsBySubcategoryId(subCatId);
         if (products) {
-            res.render('SubcategoryProducts.ejs', { products });
+            res.render('SubcategoryProducts.ejs', { products : products });
         } else {
             res.status(404).send("Product not found.");
         }
@@ -260,6 +258,7 @@ exports.getProBySubCat = async (req, res) => {
         res.status(500).send("Error fetching product details.");
     }
 };
+
 exports.deleteSubCatByID =  (req, res) => {
     let subCatId =req.params.Sid;
     let categoryId = req.params.Cid;
