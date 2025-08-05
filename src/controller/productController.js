@@ -42,8 +42,10 @@ exports.searchProductByCategory = async (req, res) => {
 }
 
 exports.liveSearch = (req, res) => {
-  const searchTerm = req.query.query;
-  productmodel.searchProducts(searchTerm)
+  const searchTerm = req.query.query || '';
+  const categoryId = req.query.category || '';
+
+  productmodel.searchProducts(searchTerm, categoryId)
     .then((products) => {
       res.json(products);
     })
@@ -52,6 +54,7 @@ exports.liveSearch = (req, res) => {
       res.status(500).json({ error: "Server error" });
     });
 };
+
 
 exports.deleteCategory =  (req, res) => {
     let categoryId =req.params.Did;
@@ -335,14 +338,12 @@ exports.showProductDetails = async (req, res) => {
     }
 };
 
-
-
 exports.getProBySubCat = async (req, res) => {
-    const subCatId = req.params.sid;
+    const subCatId = req.params.Sid;
     try {
         const products = await productmodel.getProductsBySubcategoryId(subCatId);
         if (products) {
-            res.render('SubcategoryProducts.ejs', { products });
+            res.render('SubcategoryProducts.ejs', { products : products });
         } else {
             res.status(404).send("Product not found.");
         }

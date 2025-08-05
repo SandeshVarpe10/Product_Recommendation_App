@@ -87,18 +87,18 @@
   </style>
 </head>
 <body>
-  <div class="container mt-4">
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">All Subcategories</h2>
 
-    <!-- Category Name Header -->
-    <div class="category-header"><%= categoryName %></div>
-
-    <!-- Optional Message Box -->
-    <% if (msg) { %>
-      <div class="alert alert-info alert-dismissible fade show msg-box" role="alert">
+    <% if (typeof msg !== "undefined" && msg) { %>
+      <div class="alert alert-success text-center">
         <%= msg %>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      </div>
+    <% } %>
+
+    <% if (typeof msg !== "undefined" && msg) { %>
+      <div class="alert alert-success text-center">
+        <%= msg %>
       </div>
     <% } %>
 

@@ -16,7 +16,7 @@ router.get("/logout", userCtrl.logoutUser);
 router.get("/profile",getUserFromToken,userCtrl.ShowUserProfile);
 
 
-
+//category routes
 router.get("/add-category", productCtrl.addCategoryPage);
 router.post("/savecategory", productCtrl.saveCategory);
 router.get("/view-category", productCtrl.viewCategory);
@@ -27,6 +27,7 @@ router.post("/updateSaveCategory", productCtrl.updateSaveCategory);
 router.get("/viewCategoryDetails/:Cid", productCtrl.viewCategoryDetails);
 
 
+//subcategory routes
 router.get("/add-subcategory/:Cid", productCtrl.addSubCategoryPage);
 router.post("/subcategorysave",upload.single("image"), productCtrl.saveSubCategory);
 router.get("/view-subcategories/:Cid", productCtrl.viewSubCategory);
@@ -37,7 +38,7 @@ router.post("/subcategoryupdatesave/:Cid/:Sid", upload.single("image"), productC
 router.get("/subcategorydetails/:Cid/:Sid", productCtrl.viewSubCategoryDetails);
 
 
-
+//product routes
 router.get("/add-product", productCtrl.addProductPage);
 router.post("/productsave", upload.single("image"), productCtrl.saveProduct);
 router.get("/view-products", productCtrl.viewProducts);
